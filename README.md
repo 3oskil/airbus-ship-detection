@@ -26,25 +26,25 @@ purposes.
 
    Download the dataset from the Airbus Ship Detection Challenge on Kaggle at the following URL:
 
-https://www.kaggle.com/competitions/airbus-ship-detection/data
+   https://www.kaggle.com/competitions/airbus-ship-detection/data
 
-After downloading, unzip the dataset in the root folder of this project.
+   After downloading, unzip the dataset in the root folder of this project.
 
 2. **Virtual Environment**
 
-It is recommended to use a virtual environment for this project to manage dependencies. Create a virtual environment and
-activate it using:
+   It is recommended to use a virtual environment for this project to manage dependencies. Create a virtual environment
+   and activate it using:
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
 
-Then, install the required packages using the requirements.txt file:
+   Then, install the required packages using the requirements.txt file:
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### Configuration
 
@@ -55,24 +55,24 @@ folder "configs" according to your requirements.
 
 To start the training, validation, and testing process, run the following command:
 
-```bash
-python main.py --path_config_file configs/config.yaml
-```
+   ```bash
+   python main.py --path_config_file configs/config.yaml
+   ```
 
-This process is expected to take about half a day with the default settings in the configuration file and an RTX 4090
-GPU.
+This process is expected to take about half a day with default settings in the configuration file and the NVIDIA GeForce
+RTX 4090 GPU.
 
 If you encounter any issues with dataset preprocessing, remove the created folder in the datasets directory and try
 again.
 
-After completing the execution of main.py, folder "runs" will be created containing a subfolder named model_name from
+After completing the execution of main.py, folder "runs" will be created containing a sub-folder named model_name from
 config.yaml and run number. Inside this folder, you will find:
 
-- a tests folder with masks and overlayed images from the test split.
-- best model weights.
-- the filled config file used for the run.
-- images of plots showing metrics and loss per epoch.
-- a plot of the model architecture.
+- folder "tests" with masks and overlaid images from the test split;
+- best weights of a model;
+- the filled configuration file used for the run;
+- images of plots showing metrics and losses over epochs;
+- an image of the model architecture;
 - images with comparison of some predicted and true masks from the validation set.
 
 ### Inference
