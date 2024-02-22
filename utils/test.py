@@ -3,7 +3,7 @@ import numpy as np
 
 from PIL import Image
 from tqdm import tqdm
-from utils import overlay_mask_on_image
+from utils.utils import overlay_mask_on_image
 
 
 def test_model(model, model_path, test_data, num_batches, test_folder):

@@ -7,6 +7,10 @@ state-of-the-art machine learning and computer vision techniques to improve mari
 
 For more information, visit the [competition page](https://www.kaggle.com/competitions/airbus-ship-detection).
 
+## Exploratory data analysis
+
+EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" folder.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing
@@ -44,8 +48,8 @@ pip install -r requirements.txt
 
 ### Configuration
 
-Before running any training, validation, or testing, you need to fill out the config.yaml file located in the configs
-folder according to your requirements.
+Before running main.py or inference.py you need to fill out the config.yaml file located in the
+folder "configs" according to your requirements.
 
 ### Training
 
@@ -61,15 +65,15 @@ GPU.
 If you encounter any issues with dataset preprocessing, remove the created folder in the datasets directory and try
 again.
 
-After completing the execution of main.py, a runs folder will be created containing a subfolder named after the model
-and run number. Inside this folder, you will find:
+After completing the execution of main.py, folder "runs" will be created containing a subfolder named model_name from
+config.yaml and run number. Inside this folder, you will find:
 
 - a tests folder with masks and overlayed images from the test split.
 - best model weights.
 - the filled config file used for the run.
 - images of plots showing metrics and loss per epoch.
 - a plot of the model architecture.
-- images of some predictions on the validation set.
+- images with comparison of some predicted and true masks from the validation set.
 
 ### Inference
 

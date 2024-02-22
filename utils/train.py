@@ -22,6 +22,8 @@ def train(model, train_data, valid_data, epochs, model_path):
     history = model.fit(train_data,
                         epochs=epochs,
                         verbose=1,
+                        steps_per_epoch=1,
+                        validation_steps=1,
                         callbacks=callbacks,
                         validation_data=valid_data)
 

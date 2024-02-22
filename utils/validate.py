@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from PIL import Image
 
-from utils import overlay_mask_on_image, add_text_to_image
+from utils.utils import overlay_mask_on_image, add_text_to_image
 
 
 def plot_history(history, metrics, path):

@@ -1,4 +1,4 @@
-from metrics import dice_score, bce_dice, true_positive_rate
+from utils.metrics import dice_score, bce_dice, true_positive_rate
 
 from keras.models import Model
 from keras.optimizers import Adam

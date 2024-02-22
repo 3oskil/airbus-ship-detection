@@ -2,11 +2,11 @@ import os
 import shutil
 import argparse
 
-from train import train
-from data import get_data
-from test import test_model
-from validate import validate
-from utils import load_config, get_model, create_model_run_folder, save_model_plot
+from utils.train import train
+from utils.data import get_data
+from utils.test import test_model
+from utils.validate import validate
+from utils.utils import load_config, get_model, create_model_run_folder, save_model_plot
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

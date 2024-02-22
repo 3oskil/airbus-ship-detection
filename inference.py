@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 
 from PIL import Image
-from utils import load_config, get_model, overlay_mask_on_image
+from utils.utils import load_config, get_model, overlay_mask_on_image
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
