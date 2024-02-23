@@ -7,20 +7,38 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def load_config(path) -> dict:
+    """
+    Loads configuration settings from a YAML file.
+
+    Parameters:
+        path (str): The path to the YAML configuration file.
+
+    Returns:
+        dict: A dictionary containing configuration settings.
+    """
     with open(path, 'r', encoding='utf-8') as yml_file:
         config_ = yaml.safe_load(yml_file)
     return config_
 
 
 def get_model(config):
+    """
+    Retrieves a model based on the configuration.
+
+    Parameters:
+        config (dict): Configuration dictionary with key 'model_name' indicating which model to build.
+
+    Returns:
+        keras.Model: The specified neural network model.
+    """
     if config['model_name'] == 'unet_v1':
-        from utils.models import build_unet_v1
+        from models import build_unet_v1
         model = build_unet_v1(config)
     elif config['model_name'] == 'unet_v2':
-        from utils.models import build_unet_v2
+        from models import build_unet_v2
         model = build_unet_v2(config)
     elif config['model_name'] == 'unet_pp':
-        from utils.models import build_unet_pp
+        from models import build_unet_pp
         model = build_unet_pp(config)
     else:
         model = None
@@ -28,6 +46,15 @@ def get_model(config):
 
 
 def create_model_run_folder(base_path):
+    """
+    Creates a new directory for the model run, ensuring no overwrite occurs by incrementing a run number.
+
+    Parameters:
+        base_path (str): The base path for the directory, without the run number.
+
+    Returns:
+        str: The path to the newly created directory.
+    """
     run_number = 1
     full_path = f'{base_path}_{run_number}'
 
@@ -41,12 +68,30 @@ def create_model_run_folder(base_path):
 
 
 def save_model_plot(run_path, model_name, model):
+    """
+    Saves a plot of the model architecture to the specified directory.
+
+    Parameters:
+        run_path (str): The directory where the model plot should be saved.
+        model_name (str): The name of the model, used to name the plot file.
+        model (keras.Model): The model to be plotted.
+    """
     path_model_plot = f'{run_path}/{model_name}_model_plot.jpg'
     plot_model(model, path_model_plot, dpi=46)
     print('Model plot saved to:', path_model_plot)
 
 
 def overlay_mask_on_image(image, mask):
+    """
+    Creates an overlay of a mask on an image.
+
+    Parameters:
+        image (np.ndarray or PIL.Image.Image): The original image.
+        mask (np.ndarray): The mask to overlay, should be the same size as the image.
+
+    Returns:
+        PIL.Image.Image: The image with the mask overlay.
+    """
     if not isinstance(image, Image.Image):
         image = Image.fromarray(image)
 
@@ -72,7 +117,16 @@ def overlay_mask_on_image(image, mask):
 
 
 def add_text_to_image(image, text):
-    """Adds text label on top of an image."""
+    """
+    Adds text to an image.
+
+    Parameters:
+        image (PIL.Image.Image): The image to add text to.
+        text (str): The text to add.
+
+    Returns:
+        PIL.Image.Image: The image with text added.
+    """
     try:
         font = ImageFont.truetype("arial.ttf", 20)
     except IOError:
@@ -94,27 +148,58 @@ def add_text_to_image(image, text):
 
 
 def rle_pixels(rle):
-    """ returns: the pixel count in the object encoded by 'rle' """
+    """
+    Calculates the total number of pixels represented by a run-length encoding (RLE).
+
+    Parameters:
+        rle (np.ndarray): The RLE encoded mask as a 2D numpy array with [start, length] pairs.
+
+    Returns:
+        int: The total number of pixels in the RLE mask.
+    """
     if rle.size > 0:
         return np.sum(rle[:, 1])
     return 0
 
 
 def encoded_pixels2rle(encoded_pixels):
+    """
+    Converts an encoded pixels string to a run-length encoding (RLE) numpy array.
+
+    Parameters:
+        encoded_pixels (str): The encoded pixels string.
+
+    Returns:
+        np.ndarray: The RLE as a 2D numpy array with [start, length] pairs.
+    """
     if isinstance(encoded_pixels, str):
         return np.array(list(zip(*[iter(int(x) for x in encoded_pixels.split())] * 2)))
     return np.array([])
 
 
 def object_pixels(encoded_pixels):
-    """ returns: the number of pixels in the object encoded by 'encoded_pixels' """
+    """
+    Calculates the number of pixels in an object based on its encoded pixels string.
+
+    Parameters:
+        encoded_pixels (str): The encoded pixels string of the object.
+
+    Returns:
+        int: The number of pixels in the object.
+    """
     return rle_pixels(encoded_pixels2rle(encoded_pixels))
 
 
 def rle2mask(rle, shape=(768, 768)):
     """
-    rle: 2D numpy array with rows of form [start, run-length]
-    shape: (rows, cols) the shape of the referenced image
+    Converts a run-length encoding (RLE) into a mask.
+
+    Parameters:
+        rle (np.ndarray): The RLE as a 2D numpy array with [start, length] pairs.
+        shape (tuple): The shape of the mask (height, width).
+
+    Returns:
+        np.ndarray: The mask as a 2D numpy array.
     """
     mask = np.zeros(shape[0] * shape[1], dtype=np.uint8)
 
@@ -127,20 +212,62 @@ def rle2mask(rle, shape=(768, 768)):
 
 
 def get_combined_masks(img_id, df):
+    """
+    Combines all RLE masks for a given image ID into a single mask.
+
+    Parameters:
+        img_id (str): The image ID.
+        df (pd.DataFrame): The dataframe containing the RLE masks.
+
+    Returns:
+        np.ndarray: The combined mask as a 2D numpy array.
+    """
     return rle2mask(encoded_pixels2rle(' '.join(df[df.ImageId == img_id]['EncodedPixels'].fillna('').astype(str))))
 
 
 def read_image(img_id, img_dir):
+    """
+    Reads an image from a directory given its ID.
+
+    Parameters:
+        img_id (str): The image ID.
+        img_dir (str): The directory containing the image.
+
+    Returns:
+        PIL.Image.Image: The image.
+    """
     return Image.open(os.path.join(img_dir, img_id))
 
 
 def iou(mask1, mask2):
+    """
+    Computes the Intersection over Union (IoU) between two masks.
+
+    Parameters:
+        mask1 (np.ndarray): The first mask.
+        mask2 (np.ndarray): The second mask.
+
+    Returns:
+        float: The IoU between the two masks.
+    """
     inter = np.sum((mask1 >= 0.5) & (mask2 >= 0.5))
     union = np.sum((mask1 >= 0.5) | (mask2 >= 0.5))
     return inter / (1e-8 + union - inter)
 
 
 def f_score(tp, fn, fp, beta=2.):
+    """
+    Calculates the F-beta score.
+
+    Parameters:
+        tp (int): The number of true positives.
+        fn (int): The number of false negatives.
+        fp (int): The number of false positives.
+        beta (float): The beta value of the F-score.
+
+    Returns:
+        float: The F-beta score.
+    """
     if tp + fn + fp < 1:
         return 1.
     num = (1 + beta ** 2) * tp
@@ -148,6 +275,17 @@ def f_score(tp, fn, fp, beta=2.):
 
 
 def confusion_counts(predict_mask_seq, truth_mask_seq, iou_thresh=0.5):
+    """
+    Counts true positives, false negatives, and false positives based on IoU thresholding.
+
+    Parameters:
+        predict_mask_seq (list): The list of predicted masks.
+        truth_mask_seq (list): The list of ground truth masks.
+        iou_thresh (float): The IoU threshold to consider a detection as true positive.
+
+    Returns:
+        tuple: The counts of true positives, false negatives, and false positives.
+    """
     predict_masks = [m for m in predict_mask_seq if np.any(m >= 0.5)]
     truth_masks = [m for m in truth_mask_seq if np.any(m >= 0.5)]
 
@@ -172,6 +310,18 @@ def confusion_counts(predict_mask_seq, truth_mask_seq, iou_thresh=0.5):
 
 
 def mean_f_score(predict_mask_seq, truth_mask_seq, iou_thresholds=None, beta=2.):
+    """
+    Calculates the mean F-score over a set of IoU thresholds.
+
+    Parameters:
+        predict_mask_seq (list): The list of predicted masks.
+        truth_mask_seq (list): The list of ground truth masks.
+        iou_thresholds (list, optional): The IoU thresholds to average over. Defaults to a range from 0.5 to 0.95.
+        beta (float): The beta value of the F-score.
+
+    Returns:
+        float: The mean F-score.
+    """
     if iou_thresholds is None:
         iou_thresholds = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
     return np.mean([f_score(tp, fn, fp, beta) for (tp, fn, fp) in
@@ -179,15 +329,45 @@ def mean_f_score(predict_mask_seq, truth_mask_seq, iou_thresholds=None, beta=2.)
 
 
 def get_masks(img_id, df):
+    """
+    Retrieves all masks for a given image ID from a dataframe.
+
+    Parameters:
+        img_id (str): The image ID.
+        df (pd.DataFrame): The dataframe containing the masks.
+
+    Returns:
+        list: A list of masks for the given image ID.
+    """
     return [rle2mask(encoded_pixels2rle(encoded_pixels)) for encoded_pixels in
             df[df.ImageId == img_id]['EncodedPixels']]
 
 
 def get_obj_count(img_id, df):
+    """
+    Counts the number of objects (masks) for a given image ID in a dataframe.
+
+    Parameters:
+        img_id (str): The image ID.
+        df (pd.DataFrame): The dataframe containing the masks.
+
+    Returns:
+        int: The number of objects for the given image ID.
+    """
     return df[df.ImageId == img_id]['EncodedPixels'].count()
 
 
 def preprocess_image(image_path, img_size):
+    """
+    Preprocesses an image for model input.
+
+    Parameters:
+        image_path (str): The path to the image.
+        img_size (tuple): The target size (width, height) to resize the image.
+
+    Returns:
+        np.ndarray: The preprocessed image array suitable for model input.
+    """
     image = Image.open(image_path)
     image_resized = image.resize(img_size)
     image_array = np.array(image_resized) / 255.0  # Normalize if your model expects normalized inputs

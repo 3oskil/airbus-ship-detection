@@ -41,6 +41,16 @@ def plot_history(history, metrics, path):
 
 
 def validate_model(model, model_path, valid_data, num_batches, runs_path):
+    """
+    Loads model weights, predicts on the validation set, and saves images comparing true and predicted masks.
+
+    Parameters:
+        model (keras.Model): The neural network model to evaluate.
+        model_path (str): Path to the model's saved weights.
+        valid_data (keras.utils.Sequence): Validation data generator.
+        num_batches (int): Number of batches to process from the validation set.
+        runs_path (str): Directory path where the comparison images will be saved.
+    """
     model.load_weights(model_path)
 
     print('Making predictions...')
@@ -87,6 +97,19 @@ def validate_model(model, model_path, valid_data, num_batches, runs_path):
 
 
 def validate(model, model_name, model_path, history, valid_data, num_batches, metrics, run_path):
+    """
+    Validates a trained model by plotting its training history and comparing true vs predicted masks on validation data.
+
+    Parameters:
+        model (keras.Model): The model to validate.
+        model_name (str): Name of the model, used for naming output files.
+        model_path (str): Path to the model's saved weights.
+        history (keras.callbacks.History): Training history object containing loss and metrics records.
+        valid_data (keras.utils.Sequence): Validation data generator.
+        num_batches (int): Number of batches from the validation set to use for generating mask comparisons.
+        metrics (list): List of metrics used during model training and validation.
+        run_path (str): Directory path to save the output plots and images.
+    """
     print(f'Validating {model_name}...')
     plot_history(history, metrics, run_path)
     print('Plots for loss and metrics values over epochs for train and valid were saved.')

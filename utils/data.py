@@ -12,8 +12,33 @@ from sklearn.model_selection import train_test_split
 
 
 class SegmentationDataGenerator(Sequence):
-    def __init__(self, directory, batch_size=32, shuffle=True, augmentation=True, subset='train', img_size=(384, 384)):
-        self.directory = Path(directory)
+    """
+    A data generator class for image segmentation tasks which extends keras.utils.Sequence.
+    It is designed to provide batches of images and corresponding masks for training or evaluating models.
+
+    Attributes:
+        directory (Path, str): The base directory where dataset is stored.
+        batch_size (int): The size of the batches to generate.
+        shuffle (bool): Whether to shuffle the data before each epoch.
+        augmentation (bool): Whether to apply data augmentation.
+        subset (str): The subset of the dataset to use ('train', 'val', or 'test').
+        img_size (tuple): The target size of the images and masks.
+    """
+
+    def __init__(self, directory: Path, batch_size=32, shuffle=True, augmentation=True, subset='train',
+                 img_size=(384, 384)):
+        """
+        Initializes the data generator with the specified parameters.
+
+        Parameters:
+            directory (Path): Path to the base directory of the dataset.
+            batch_size (int): Number of images per batch.
+            shuffle (bool): Whether to shuffle the dataset at the start of each epoch.
+            augmentation (bool): Flag to enable/disable augmentation.
+            subset (str): Specifies the dataset subset to use ('train', 'val', 'test').
+            img_size (tuple): The desired size of output images.
+        """
+        self.directory = directory
         self.batch_size = batch_size
         self.shuffle = shuffle
         self.augmentation = augmentation
@@ -46,9 +71,24 @@ class SegmentationDataGenerator(Sequence):
         ])
 
     def __len__(self):
+        """
+        Denotes the number of batches per epoch.
+
+        Returns:
+            int: The number of batches per epoch.
+        """
         return int(np.ceil(len(self.images) / self.batch_size))
 
     def __getitem__(self, index):
+        """
+        Generate one batch of data.
+
+        Parameters:
+            index (int): Index of the batch to generate.
+
+        Returns:
+            Tuple[np.ndarray, np.ndarray]: A tuple containing batch of images and their corresponding masks.
+        """
         start = index * self.batch_size
         end = (index + 1) * self.batch_size
 
@@ -77,10 +117,20 @@ class SegmentationDataGenerator(Sequence):
         return x_batch / 255.0, y_batch / 255.0  # Normalize pixel values to [0, 1]
 
     def on_epoch_end(self):
+        """
+        Updates indexes after each epoch. Optional method for shuffle.
+        """
         if self.shuffle:
             np.random.shuffle(self.indexes)
 
     def show_batch(self, index=0, num_examples=None):
+        """
+        Visualizes a batch of images and their corresponding masks.
+
+        Parameters:
+            index (int, optional): The index of the batch to show. Defaults to 0.
+            num_examples (int, optional): The number of examples to show from the batch. If None, shows all examples in the batch.
+        """
         x_batch, y_batch = self.__getitem__(index)
 
         if num_examples is None:
@@ -100,6 +150,12 @@ class SegmentationDataGenerator(Sequence):
             plt.show()
 
     def show_comparison(self, num_examples=3):
+        """
+        Shows a comparison between original and augmented images and masks for a sample of the dataset.
+
+        Parameters:
+            num_examples (int, optional): The number of examples to show. Defaults to 3.
+        """
         indexes = np.random.choice(len(self.images), num_examples, replace=False)
 
         for i in indexes:
@@ -133,6 +189,17 @@ class SegmentationDataGenerator(Sequence):
 
 
 def get_mask(img_id, df, dataset_img_size=(768, 768)):
+    """
+    Generates a mask for an image based on run-length encoding.
+
+    Parameters:
+        img_id (str): The ID of the image to generate the mask for.
+        df (pd.DataFrame): The dataframe containing the run-length encoding.
+        dataset_img_size (tuple): The size of the dataset images.
+
+    Returns:
+        np.ndarray: The generated mask as a 2D array.
+    """
     img = np.zeros(dataset_img_size[0] * dataset_img_size[1], dtype=np.uint8)
     masks = df[df['ImageId'] == img_id]['EncodedPixels']
     if pd.isnull(masks).any():
@@ -150,7 +217,16 @@ def get_mask(img_id, df, dataset_img_size=(768, 768)):
     return img.reshape(dataset_img_size).T
 
 
-def validate_dataset(dataset_dir):
+def validate_dataset(dataset_dir: Path):
+    """
+    Validates the dataset structure and contents, ensuring that the necessary directories and files exist.
+
+    Parameters:
+        dataset_dir (Path): The path to the dataset directory.
+
+    Returns:
+        bool: True if the dataset is valid, False otherwise.
+    """
     success = True
     splits = ['train', 'val', 'test']
 
@@ -285,6 +361,16 @@ def validate_dataset(dataset_dir):
 
 
 def get_data(config):
+    """
+    Prepares the dataset for training, validating, and testing by organizing files, validating the dataset,
+    and creating data generators for each dataset split.
+
+    Parameters:
+        config (dict): Configuration dictionary containing dataset paths, image sizes, batch size, etc.
+
+    Returns:
+        tuple: A tuple containing the training, validation, and test data generators.
+    """
     destination_dataset_path = Path(config['destination_dataset_path'])
     img_size = (config['img_size'], config['img_size'])
     batch_size = config['batch_size']

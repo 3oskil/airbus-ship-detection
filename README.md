@@ -11,6 +11,104 @@ For more information, visit the [competition page](https://www.kaggle.com/compet
 
 EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" folder.
 
+## Solution description
+
+1. **Dataset Preprocessing**
+    - Dataset Validation: It checks the dataset's structure and contents, ensuring the presence of necessary directories
+      and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
+      corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
+      are in the correct format.
+
+    - Data Augmentation: Utilizes the albumentations library to perform on-the-fly data augmentation during the training
+      phase. The augmentation techniques include flips, rotations, brightness and contrast adjustments, and more complex
+      transformations like elastic, grid, and optical distortions. This helps improve model generalization by presenting
+      a more diverse set of training examples.
+
+    - Data Generators: Implements a SegmentationDataGenerator class that extends keras.utils.Sequence, providing a
+      robust mechanism for batch-wise data feeding during model training or evaluation. This class efficiently handles
+      image and mask loading, resizing, optional augmentation, and normalization. It supports shuffling to ensure
+      diverse mini-batches and includes methods for visualizing batches of data, aiding in debugging and dataset
+      understanding.
+
+    - Dataset Preparation and Organization: Includes functions for organizing and preparing the dataset into a structure
+      suitable for training, validation, and testing. It automates the process of copying images and masks to designated
+      directories, applying data augmentation, and splitting the dataset. This setup phase ensures that the data is
+      correctly partitioned and accessible for the data generators.
+
+    - Custom Augmentation: The framework is designed to accommodate future enhancements in data augmentation techniques,
+      specifically targeting the augmentation of images by introducing synthetic variations. This innovative approach
+      involves extracting boat images from existing photographs using their segmentation masks, then applying
+      transformations such as rotation, resizing, and random placement onto images that originally contain no boats.
+      This method aims to artificially increase the diversity and complexity of the dataset by generating new, unique
+      training examples. By doing so, the model can learn from a broader range of scenarios, potentially improving its
+      ability to generalize across unseen data. This custom augmentation strategy is particularly valuable for tasks
+      where the dataset is limited or lacks variety in certain aspects, offering a creative solution to enhance model
+      performance without the need for additional real-world data.
+
+2. **Models**
+
+   ##### U-Net Version 1 (build_unet_v1)
+
+   This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
+   with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
+   model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
+   transposed convolutions for upsampling. The architecture is designed to work with images of a configurable size and
+   utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
+   accuracy and overlap between predicted and ground truth masks.
+
+   ##### U-Net Version 2 (build_unet_v2)
+
+   The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
+   convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
+   performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
+   for better handling of vanishing gradient issues compared to the traditional ReLU, and includes dropout for
+   regularization. The design principles remain focused on balancing feature extraction capabilities with computational
+   efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
+
+   ##### U-Net++ (build_unet_pp)
+
+   U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
+   skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
+   facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
+   boundaries and fine structures. The model uses convolutional blocks with ELU activation, dropout for regularization,
+   and l2 kernel regularization to prevent overfitting. The architecture is highly configurable, allowing adjustments to
+   filter sizes and layer configurations to suit different image sizes and segmentation challenges. U-Net++ is
+   particularly effective in applications requiring high precision in segmentation outcomes.
+
+   Each model is compiled with Adam optimizer, utilizing a combined loss function that includes both binary
+   cross-entropy and dice loss to balance between pixel-wise classification accuracy and overlap metrics. The choice
+   between these architectures offers flexibility in addressing various segmentation challenges, from basic applications
+   with U-Net v1 to more complex scenarios requiring advanced features like those in U-Net v2 and U-Net++.
+
+3. Loss and metrics
+
+   ##### Dice Score
+   The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
+   of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
+   overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
+   Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
+   number of pixels in both masks, with a small constant added to avoid division by zero.
+
+   ```math
+   \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+   ```
+
+   ##### BCE-Dice Loss
+   The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
+   This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
+   measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
+   accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
+   loss function helps mitigate the limitations of using either loss individually, promoting better performance in
+   segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+
+   ##### True Positive Rate
+   The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
+   true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
+   pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
+   analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
+   by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
+   the total number of actual positives in the ground truth.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing

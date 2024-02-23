@@ -7,6 +7,17 @@ from utils.utils import overlay_mask_on_image
 
 
 def test_model(model, model_path, test_data, num_batches, test_folder):
+    """
+    Loads a trained model's weights, makes predictions on the test dataset, and saves the predicted masks
+    and overlay images to a specified folder.
+
+    Parameters:
+        model (keras.models.Model): The trained model to evaluate.
+        model_path (str): Path to the trained model weights.
+        test_data (keras.utils.Sequence): A batched data generator for the test dataset.
+        num_batches (int): The number of batches to process from the test dataset.
+        test_folder (str): The folder path where the prediction results will be saved.
+    """
     model.load_weights(model_path)
 
     os.makedirs(test_folder, exist_ok=True)

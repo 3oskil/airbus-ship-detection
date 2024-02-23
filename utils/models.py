@@ -7,6 +7,15 @@ from keras.layers import Input, Conv2D, MaxPool2D, Conv2DTranspose, Dropout, Bat
 
 
 def build_unet_v1(config):
+    """
+    Builds a U-Net version 1 model based on the provided configuration.
+
+    Parameters:
+        config (dict): Configuration dictionary that includes 'img_size' and 'learning_rate'.
+
+    Returns:
+        keras.models.Model: Compiled U-Net model.
+    """
     img_size = config['img_size']
 
     strides = (2, 2)
@@ -98,6 +107,15 @@ def build_unet_v1(config):
 
 
 def build_unet_v2(config):
+    """
+    Builds a U-Net version 2 model with configurable parameters and enhanced features such as BatchNormalization.
+
+    Parameters:
+        config (dict): Configuration dictionary that includes 'img_size' and 'learning_rate'.
+
+    Returns:
+        keras.models.Model: Compiled U-Net model.
+    """
     k = 2
     img_size = config['img_size']
     input_shape = (img_size, img_size, 3)
@@ -140,6 +158,16 @@ def build_unet_v2(config):
 
 
 def build_unet_pp(config):
+    """
+    Builds a U-Net++ model based on the provided configuration. U-Net++ introduces a series of nested, dense skip
+    pathways, which provide more precise segmentation and better gradient flow.
+
+    Parameters:
+        config (dict): Configuration dictionary that includes 'img_size', 'nb_filter', and 'learning_rate'.
+
+    Returns:
+        keras.models.Model: Compiled U-Net++ model.
+    """
     img_size = config['img_size']
     nb_filter = config['nb_filter']
     learning_rate = config['learning_rate']
