@@ -4,6 +4,7 @@
 
 - [Project description](#Project-description)
 - [Notes](#Notes)
+  - [To-Do](#To-Do)
 - [Exploratory data analysis](#Exploratory-data-analysis)
 - [Solution description](#Solution-description)
 - [Getting Started](#Getting-Started)
@@ -25,7 +26,7 @@ For more information, visit the [competition page](https://www.kaggle.com/compet
 3. The training performance was slightly lower, attributed to the use of cross-validation with a validation set size of
    0.05, resulting in a more extensive training dataset.
 
-To-Do:
+### To-Do:
 
 1. During cross-validation, create a test set.
 2. Implement custom augmentation by randomly selecting boats using masks from images containing boats and inserting them
