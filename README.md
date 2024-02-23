@@ -71,7 +71,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
   directories, applying data augmentation, and splitting the dataset. This setup phase ensures that the data is
   correctly partitioned and accessible for the data generators.
 
-- **Custom Augmentation**: The framework is designed to accommodate future enhancements in data augmentation techniques,
+- *Custom Augmentation*: The framework is designed to accommodate future enhancements in data augmentation techniques,
   specifically targeting the augmentation of images by introducing synthetic variations. This innovative approach
   involves extracting boat images from existing photographs using their segmentation masks, then applying
   transformations such as rotation, resizing, and random placement onto images that originally contain no boats.
