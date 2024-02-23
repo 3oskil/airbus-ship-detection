@@ -50,6 +50,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 ## Solution description
 
 ### Dataset Preprocessing
+
 - **Dataset Validation**: It checks the dataset's structure and contents, ensuring the presence of necessary directories
   and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
   corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
@@ -83,79 +84,79 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 ### **Models**
 
-   - #### U-Net Version 1 (build_unet_v1)
-       This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
-       with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
-       model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
-       transposed convolutions for upsampling. The architecture is designed to work with images of a configurable size and
-       utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
-       accuracy and overlap between predicted and ground truth masks.
-   
-   - #### U-Net Version 2 (build_unet_v2)
-       The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
-       convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
-       performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
-       for better handling of vanishing gradient issues compared to the traditional ReLU, and includes dropout for
-       regularization. The design principles remain focused on balancing feature extraction capabilities with computational
-       efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
-   
-   - #### U-Net++ (build_unet_pp)
-       U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
-       skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
-       facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
-       boundaries and fine structures. The model uses convolutional blocks with ELU activation, dropout for regularization,
-       and l2 kernel regularization to prevent overfitting. The architecture is highly configurable, allowing adjustments to
-       filter sizes and layer configurations to suit different image sizes and segmentation challenges. U-Net++ is
-       particularly effective in applications requiring high precision in segmentation outcomes.
-   
-   Each model is compiled with Adam optimizer, utilizing a combined loss function that includes both binary
-   cross-entropy and dice loss to balance between pixel-wise classification accuracy and overlap metrics. The choice
-   between these architectures offers flexibility in addressing various segmentation challenges, from basic applications
-   with U-Net v1 to more complex scenarios requiring advanced features like those in U-Net v2 and U-Net++.
+- #### U-Net Version 1 (build_unet_v1)
+  This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
+  with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
+  model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
+  transposed convolutions for upsampling. The architecture is designed to work with images of a configurable size and
+  utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
+  accuracy and overlap between predicted and ground truth masks.
+
+- #### U-Net Version 2 (build_unet_v2)
+  The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
+  convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
+  performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
+  for better handling of vanishing gradient issues compared to the traditional ReLU, and includes dropout for
+  regularization. The design principles remain focused on balancing feature extraction capabilities with computational
+  efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
+
+- #### U-Net++ (build_unet_pp)
+  U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
+  skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
+  facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
+  boundaries and fine structures. The model uses convolutional blocks with ELU activation, dropout for regularization,
+  and l2 kernel regularization to prevent overfitting. The architecture is highly configurable, allowing adjustments to
+  filter sizes and layer configurations to suit different image sizes and segmentation challenges. U-Net++ is
+  particularly effective in applications requiring high precision in segmentation outcomes.
+
+Each model is compiled with Adam optimizer, utilizing a combined loss function that includes both binary
+cross-entropy and dice loss to balance between pixel-wise classification accuracy and overlap metrics. The choice
+between these architectures offers flexibility in addressing various segmentation challenges, from basic applications
+with U-Net v1 to more complex scenarios requiring advanced features like those in U-Net v2 and U-Net++.
 
 ### **Loss and metrics**
 
 - #### Dice Score
-    The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
-    of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
-    overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
-    Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
-    number of pixels in both masks, with a small constant added to avoid division by zero.
+  The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
+  of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
+  overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
+  Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
+  number of pixels in both masks, with a small constant added to avoid division by zero.
 
-$$\text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum
-y_{\text{pred}} + \epsilon}$$
+  > $$\text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum
+  > y_{\text{pred}} + \epsilon}$$
 
-  - $`y_{\text{pred}}`$ - predicted segmentation map.
-  - $`y_{\text{true}}`$ - ground truth segmentation map.
-  - $`\sum`$ - summation over all pixels.
-  - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
+  > - $`y_{\text{pred}}`$ - predicted segmentation map.
+  > - $`y_{\text{true}}`$ - ground truth segmentation map.
+  > - $`\sum`$ - summation over all pixels.
+  > - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
 
 - #### BCE-Dice Loss
-    The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
-    This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
-    measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
-    accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
-    loss function helps mitigate the limitations of using either loss individually, promoting better performance in
-    segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+  The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
+  This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
+  measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
+  accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
+  loss function helps mitigate the limitations of using either loss individually, promoting better performance in
+  segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
 
 $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}$$
 
-   - $`y_{\text{true}}`$ - ground truth segmentation map.
-   - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
-   - Other symbols as defined previously.
+- $`y_{\text{true}}`$ - ground truth segmentation map.
+- $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
+- Other symbols as defined previously.
 
 - #### True Positive Rate
-    The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
-    true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
-    pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
-    analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
-    by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
-    the total number of actual positives in the ground truth.
+  The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
+  true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
+  pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
+  analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
+  by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
+  the total number of actual positives in the ground truth.
 
 $$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})$$
 
-   - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
-   - $`1 - \text{Dice}`$ - ground truth segmentation map.
+- $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
+- $`1 - \text{Dice}`$ - ground truth segmentation map.
 
 ### **Training, Validation and Test**
 
@@ -163,19 +164,21 @@ The **train** function orchestrates the model training process using provided tr
 incorporates several key components:
 
 **Callbacks** for enhancing training:
- - *ModelCheckpoint* saves the best model based on validation loss.
- - *ReduceLROnPlateau* reduces the learning rate when a metric has stopped improving, helping to fine-tune the
-   model.
- - *EarlyStopping* halts training when a monitored metric stops improving, preventing overfitting.
+
+- *ModelCheckpoint* saves the best model based on validation loss.
+- *ReduceLROnPlateau* reduces the learning rate when a metric has stopped improving, helping to fine-tune the
+  model.
+- *EarlyStopping* halts training when a monitored metric stops improving, preventing overfitting.
 
 The model is trained over a specified number of epochs, with training and validation data fed into the model.
 
 **Validation** is twofold, involving both quantitative and qualitative evaluations:
- - Quantitative: The plot_history function generates plots for loss and each metric over the training epochs, helping
-   to visually assess the model's learning progress and performance on both training and validation data.
- - Qualitative: The validate_model function performs predictions on the validation set and saves images comparing
-   true masks (ground truth) with predicted masks. This visual comparison provides intuitive insights into the
-   model's segmentation capabilities.
+
+- Quantitative: The plot_history function generates plots for loss and each metric over the training epochs, helping
+  to visually assess the model's learning progress and performance on both training and validation data.
+- Qualitative: The validate_model function performs predictions on the validation set and saves images comparing
+  true masks (ground truth) with predicted masks. This visual comparison provides intuitive insights into the
+  model's segmentation capabilities.
 
 The **test** evaluates the model on a separate test dataset. It loads the best model weights, makes predictions, and
 saves both the predicted masks and overlay images, offering a final qualitative assessment of the model's
