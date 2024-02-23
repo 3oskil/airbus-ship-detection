@@ -9,18 +9,19 @@ For more information, visit the [competition page](https://www.kaggle.com/compet
 
 ## Notes
 
-1. The only one of the three models was used for training - U-Net Version 1.
-2. Model reached around 0.8 for Dice Score, 0.2 for BCE-Dice Loss, 0.75-0.85 for True Positive Rate (train and val),
-   train value a bit worse because of cross-validation where validation size is 0.05, so the training set is more
-   comprehensive.
+1. Among the three models, only U-Net Version 1 was utilized for training.
+2. The model achieved a Dice Score of approximately 0.8, a BCE-Dice Loss of 0.2, and a True Positive Rate of between
+   0.75 and 0.85 for both training and validation datasets.
+3. The training performance was slightly lower, attributed to the use of cross-validation with a validation set size of
+   0.05, resulting in a more extensive training dataset.
 
-TODO:
+To-Do:
 
-1. Make test set during cross-validation.
-2. Make custom augmentation that means randomly extracting boats using masks from images with boats and put them on the
-   images without boats (include resize, rotate and random placing).
-3. Try U-Net Version 2 and U-Net++.
-4. Use MLFlow and Docker.
+1. During cross-validation, create a test set.
+2. Implement custom augmentation by randomly selecting boats using masks from images containing boats and inserting them
+   into images without boats. This process should include resizing, rotating, and randomly placing the boats.
+3. Experiment with U-Net Version 2 and U-Net++ models.
+4. Integrate MLFlow and Docker for enhanced workflow management.
 
 ## Exploratory data analysis
 
