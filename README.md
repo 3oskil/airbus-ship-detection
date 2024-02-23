@@ -13,7 +13,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 ## Solution description
 
-1. **Dataset Preprocessing** (data.py file)
+1. ### **Dataset Preprocessing** (data.py file)
     - Dataset Validation: It checks the dataset's structure and contents, ensuring the presence of necessary directories
       and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
       corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
@@ -45,7 +45,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
       where the dataset is limited or lacks variety in certain aspects, offering a creative solution to enhance model
       performance without the need for additional real-world data.
 
-2. **Models** (models.py file)
+2. ### **Models** (models.py file)
 
    ##### U-Net Version 1 (build_unet_v1)
 
@@ -80,7 +80,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    between these architectures offers flexibility in addressing various segmentation challenges, from basic applications
    with U-Net v1 to more complex scenarios requiring advanced features like those in U-Net v2 and U-Net++.
 
-3. **Loss and metrics** (metrics.py file)
+3. ### **Loss and metrics** (metrics.py file)
 
    ##### Dice Score
    The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
@@ -126,7 +126,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
     - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
     - $`1 - \text{Dice}`$ - ground truth segmentation map.
 
-4. **Training, Validation and Test** (train.py, validate.py, test.py file)
+4. ### **Training, Validation and Test** (train.py, validate.py, test.py file)
 
    The **train** function orchestrates the model training process using provided training and validation datasets. It
    incorporates several key components:
