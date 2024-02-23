@@ -92,7 +92,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
    accuracy and overlap between predicted and ground truth masks.
    
-   ##### U-Net Version 2 (build_unet_v2)
+   - ##### U-Net Version 2 (build_unet_v2)
    
    The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
    convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
@@ -101,7 +101,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    regularization. The design principles remain focused on balancing feature extraction capabilities with computational
    efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
    
-   ##### U-Net++ (build_unet_pp)
+   - ##### U-Net++ (build_unet_pp)
    
    U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
    skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
@@ -118,12 +118,12 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 #### **Loss and metrics**
 
-##### Dice Score
-The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
-of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
-overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
-Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
-number of pixels in both masks, with a small constant added to avoid division by zero.
+- ##### Dice Score
+    The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
+    of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
+    overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
+    Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
+    number of pixels in both masks, with a small constant added to avoid division by zero.
 
 $$\text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum
 y_{\text{pred}} + \epsilon}$$
@@ -133,14 +133,14 @@ y_{\text{pred}} + \epsilon}$$
  - $`\sum`$ - summation over all pixels.
  - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
 
-##### BCE-Dice Loss
+- ##### BCE-Dice Loss
 
-The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
-This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
-measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
-accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
-loss function helps mitigate the limitations of using either loss individually, promoting better performance in
-segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+    The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
+    This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
+    measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
+    accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
+    loss function helps mitigate the limitations of using either loss individually, promoting better performance in
+    segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
 
 $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}$$
 
@@ -148,14 +148,14 @@ $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))
  - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
  - Other symbols as defined previously.
 
-##### True Positive Rate
+- ##### True Positive Rate
 
-The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
-true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
-pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
-analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
-by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
-the total number of actual positives in the ground truth.
+    The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
+    true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
+    pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
+    analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
+    by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
+    the total number of actual positives in the ground truth.
 
 $$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})$$
 
