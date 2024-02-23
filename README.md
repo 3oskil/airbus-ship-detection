@@ -84,29 +84,29 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 ### **Models**
 
    - #### U-Net Version 1 (build_unet_v1)
-   This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
-   with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
-   model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
-   transposed convolutions for upsampling. The architecture is designed to work with images of a configurable size and
-   utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
-   accuracy and overlap between predicted and ground truth masks.
+       This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
+       with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
+       model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
+       transposed convolutions for upsampling. The architecture is designed to work with images of a configurable size and
+       utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
+       accuracy and overlap between predicted and ground truth masks.
    
    - #### U-Net Version 2 (build_unet_v2)
-   The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
-   convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
-   performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
-   for better handling of vanishing gradient issues compared to the traditional ReLU, and includes dropout for
-   regularization. The design principles remain focused on balancing feature extraction capabilities with computational
-   efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
+       The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
+       convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
+       performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
+       for better handling of vanishing gradient issues compared to the traditional ReLU, and includes dropout for
+       regularization. The design principles remain focused on balancing feature extraction capabilities with computational
+       efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
    
    - #### U-Net++ (build_unet_pp)
-   U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
-   skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
-   facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
-   boundaries and fine structures. The model uses convolutional blocks with ELU activation, dropout for regularization,
-   and l2 kernel regularization to prevent overfitting. The architecture is highly configurable, allowing adjustments to
-   filter sizes and layer configurations to suit different image sizes and segmentation challenges. U-Net++ is
-   particularly effective in applications requiring high precision in segmentation outcomes.
+       U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
+       skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
+       facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
+       boundaries and fine structures. The model uses convolutional blocks with ELU activation, dropout for regularization,
+       and l2 kernel regularization to prevent overfitting. The architecture is highly configurable, allowing adjustments to
+       filter sizes and layer configurations to suit different image sizes and segmentation challenges. U-Net++ is
+       particularly effective in applications requiring high precision in segmentation outcomes.
    
    Each model is compiled with Adam optimizer, utilizing a combined loss function that includes both binary
    cross-entropy and dice loss to balance between pixel-wise classification accuracy and overlap metrics. The choice
@@ -125,10 +125,10 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 $$\text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum
 y_{\text{pred}} + \epsilon}$$
 
- - $`y_{\text{pred}}`$ - predicted segmentation map.
- - $`y_{\text{true}}`$ - ground truth segmentation map.
- - $`\sum`$ - summation over all pixels.
- - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
+  - $`y_{\text{pred}}`$ - predicted segmentation map.
+  - $`y_{\text{true}}`$ - ground truth segmentation map.
+  - $`\sum`$ - summation over all pixels.
+  - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
 
 - #### BCE-Dice Loss
     The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
@@ -140,9 +140,9 @@ y_{\text{pred}} + \epsilon}$$
 
 $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}$$
 
- - $`y_{\text{true}}`$ - ground truth segmentation map.
- - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
- - Other symbols as defined previously.
+   - $`y_{\text{true}}`$ - ground truth segmentation map.
+   - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
+   - Other symbols as defined previously.
 
 - #### True Positive Rate
     The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
@@ -154,8 +154,8 @@ $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))
 
 $$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})$$
 
- - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
- - $`1 - \text{Dice}`$ - ground truth segmentation map.
+   - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
+   - $`1 - \text{Dice}`$ - ground truth segmentation map.
 
 ### **Training, Validation and Test**
 
@@ -163,10 +163,10 @@ The **train** function orchestrates the model training process using provided tr
 incorporates several key components:
 
 **Callbacks** for enhancing training:
- - **ModelCheckpoint** saves the best model based on validation loss.
- - **ReduceLROnPlateau** reduces the learning rate when a metric has stopped improving, helping to fine-tune the
+ - *ModelCheckpoint* saves the best model based on validation loss.
+ - *ReduceLROnPlateau* reduces the learning rate when a metric has stopped improving, helping to fine-tune the
    model.
- - **EarlyStopping** halts training when a monitored metric stops improving, preventing overfitting.
+ - *EarlyStopping* halts training when a monitored metric stops improving, preventing overfitting.
 
 The model is trained over a specified number of epochs, with training and validation data fed into the model.
 
