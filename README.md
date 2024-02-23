@@ -93,21 +93,28 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    \text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum y_{\text{pred}} + \epsilon}
    ```
 
-   ##### BCE-Dice Loss
-   The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
-   This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
-   measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
-   accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
-   loss function helps mitigate the limitations of using either loss individually, promoting better performance in
-   segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+   $`y_{\text{pred}}`$: Predicted segmentation map.
+   $`y_{\text{true}}`$: Ground truth segmentation map.
+   $`\sum`$: Summation over all pixels.
+   $`\epsilon`$: A small constant (e.g., 0.0001) added to avoid division by zero.
 
-   ##### True Positive Rate
-   The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
-   true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
-   pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
-   analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
-   by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
-   the total number of actual positives in the ground truth.
+##### BCE-Dice Loss
+
+The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
+This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
+measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
+accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
+loss function helps mitigate the limitations of using either loss individually, promoting better performance in
+segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+
+##### True Positive Rate
+
+The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
+true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
+pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
+analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
+by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
+the total number of actual positives in the ground truth.
 
 ## Getting Started
 
