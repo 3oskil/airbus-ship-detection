@@ -7,7 +7,7 @@
     - [To-Do](#To-Do)
 - [Exploratory data analysis](#Exploratory-data-analysis)
 - [Solution description](#Solution-description)
-    - [Dataset Preprocessing](#dataset-preprocessing)
+    - 1. [Dataset Preprocessing](#dataset-preprocessing)
     - [Models](#Models)
     - [Loss and metrics](#Loss-and-metrics)
     - [Training, Validation and Test](#Training,-Validation-and-Test)
