@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Project description](#Project description)
+- [Project description]("#Project description")
 - [Notes](#Notes)
 - [Installation](#installation)
 - [Usage](#usage)
