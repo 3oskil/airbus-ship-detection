@@ -14,36 +14,36 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 ## Solution description
 
 1. ### **Dataset Preprocessing** (data.py file)
-    - Dataset Validation: It checks the dataset's structure and contents, ensuring the presence of necessary directories
-      and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
-      corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
-      are in the correct format.
+   - Dataset Validation: It checks the dataset's structure and contents, ensuring the presence of necessary directories
+     and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
+     corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
+     are in the correct format.
 
-    - Data Augmentation: Utilizes the albumentations library to perform on-the-fly data augmentation during the training
-      phase. The augmentation techniques include flips, rotations, brightness and contrast adjustments, and more complex
-      transformations like elastic, grid, and optical distortions. This helps improve model generalization by presenting
-      a more diverse set of training examples.
+   - Data Augmentation: Utilizes the albumentations library to perform on-the-fly data augmentation during the training
+     phase. The augmentation techniques include flips, rotations, brightness and contrast adjustments, and more complex
+     transformations like elastic, grid, and optical distortions. This helps improve model generalization by presenting
+     a more diverse set of training examples.
 
-    - Data Generators: Implements a SegmentationDataGenerator class that extends keras.utils.Sequence, providing a
-      robust mechanism for batch-wise data feeding during model training or evaluation. This class efficiently handles
-      image and mask loading, resizing, optional augmentation, and normalization. It supports shuffling to ensure
-      diverse mini-batches and includes methods for visualizing batches of data, aiding in debugging and dataset
-      understanding.
+   - Data Generators: Implements a SegmentationDataGenerator class that extends keras.utils.Sequence, providing a
+     robust mechanism for batch-wise data feeding during model training or evaluation. This class efficiently handles
+     image and mask loading, resizing, optional augmentation, and normalization. It supports shuffling to ensure
+     diverse mini-batches and includes methods for visualizing batches of data, aiding in debugging and dataset
+     understanding.
 
-    - Dataset Preparation and Organization: Includes functions for organizing and preparing the dataset into a structure
-      suitable for training, validation, and testing. It automates the process of copying images and masks to designated
-      directories, applying data augmentation, and splitting the dataset. This setup phase ensures that the data is
-      correctly partitioned and accessible for the data generators.
+   - Dataset Preparation and Organization: Includes functions for organizing and preparing the dataset into a structure
+     suitable for training, validation, and testing. It automates the process of copying images and masks to designated
+     directories, applying data augmentation, and splitting the dataset. This setup phase ensures that the data is
+     correctly partitioned and accessible for the data generators.
 
-    - Custom Augmentation: The framework is designed to accommodate future enhancements in data augmentation techniques,
-      specifically targeting the augmentation of images by introducing synthetic variations. This innovative approach
-      involves extracting boat images from existing photographs using their segmentation masks, then applying
-      transformations such as rotation, resizing, and random placement onto images that originally contain no boats.
-      This method aims to artificially increase the diversity and complexity of the dataset by generating new, unique
-      training examples. By doing so, the model can learn from a broader range of scenarios, potentially improving its
-      ability to generalize across unseen data. This custom augmentation strategy is particularly valuable for tasks
-      where the dataset is limited or lacks variety in certain aspects, offering a creative solution to enhance model
-      performance without the need for additional real-world data.
+   - Custom Augmentation: The framework is designed to accommodate future enhancements in data augmentation techniques,
+     specifically targeting the augmentation of images by introducing synthetic variations. This innovative approach
+     involves extracting boat images from existing photographs using their segmentation masks, then applying
+     transformations such as rotation, resizing, and random placement onto images that originally contain no boats.
+     This method aims to artificially increase the diversity and complexity of the dataset by generating new, unique
+     training examples. By doing so, the model can learn from a broader range of scenarios, potentially improving its
+     ability to generalize across unseen data. This custom augmentation strategy is particularly valuable for tasks
+     where the dataset is limited or lacks variety in certain aspects, offering a creative solution to enhance model
+     performance without the need for additional real-world data.
 
 2. ### **Models** (models.py file)
 
