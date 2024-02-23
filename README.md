@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Project description](#Project description)
-- [Features](#features)
+- [Notes](#Notes)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
