@@ -116,7 +116,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    between these architectures offers flexibility in addressing various segmentation challenges, from basic applications
    with U-Net v1 to more complex scenarios requiring advanced features like those in U-Net v2 and U-Net++.
 
-#### **Loss and metrics** (metrics.py file)
+#### **Loss and metrics**
 
 ##### Dice Score
 The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
@@ -162,7 +162,7 @@ $$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \te
  - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
  - $`1 - \text{Dice}`$ - ground truth segmentation map.
 
-#### **Training, Validation and Test** (train.py, validate.py, test.py file)
+#### **Training, Validation and Test**
 
 The **train** function orchestrates the model training process using provided training and validation datasets. It
 incorporates several key components:
