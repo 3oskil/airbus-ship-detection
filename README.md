@@ -126,8 +126,8 @@ with U-Net v1 to more complex scenarios requiring advanced features like those i
   $$\text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum
   y_{\text{pred}} + \epsilon}$$
 
-  where $`y_{\text{pred}}`$ - predicted segmentation map, $`y_{\text{true}}`$ - ground truth segmentation
-  map, $`\sum`$ - summation over all pixels, $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by
+  where $`y_{\text{pred}}`$ - predicted segmentation map; $`y_{\text{true}}`$ - ground truth segmentation
+  map; $`\sum`$ - summation over all pixels; $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by
   zero.
 
 - #### BCE-Dice Loss
@@ -138,11 +138,10 @@ with U-Net v1 to more complex scenarios requiring advanced features like those i
   loss function helps mitigate the limitations of using either loss individually, promoting better performance in
   segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
 
-$$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}$$
+  $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}$$
 
-- $`y_{\text{true}}`$ - ground truth segmentation map.
-- $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
-- Other symbols as defined previously.
+  where $`y_{\text{true}}`$ - ground truth segmentation map; $`\text{round}(y_{\text{pred}})`$ - predicted segmentation
+  map rounded to the nearest integer (0 or 1); other symbols as defined previously.
 
 - #### True Positive Rate
   The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
@@ -152,10 +151,10 @@ $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))
   by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
   the total number of actual positives in the ground truth.
 
-$$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})$$
+  $$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})$$
 
-- $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
-- $`1 - \text{Dice}`$ - ground truth segmentation map.
+  where $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map; $`1 - \text{Dice}`$ - ground
+  truth segmentation map.
 
 ### **Training, Validation and Test**
 
