@@ -82,60 +82,60 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 3. Loss and metrics
 
-   ##### Dice Score
-   The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
-   of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
-   overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
-   Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
-   number of pixels in both masks, with a small constant added to avoid division by zero.
+##### Dice Score
+The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
+of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
+overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
+Dice score is calculated as twice the area of overlap between the predicted and true masks divided by the total
+number of pixels in both masks, with a small constant added to avoid division by zero.
 
 ```math
 \text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum y_{\text{pred}} + \epsilon}
 ```
 
-   - $`y_{\text{pred}}`$ - predicted segmentation map.
+- $`y_{\text{pred}}`$ - predicted segmentation map.
 
-   - $`y_{\text{true}}`$ - ground truth segmentation map.
+- $`y_{\text{true}}`$ - ground truth segmentation map.
 
-   - $`\sum`$ - summation over all pixels.
+- $`\sum`$ - summation over all pixels.
 
-   - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
+- $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
 
-   ##### BCE-Dice Loss
-   
-   The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
-   This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
-   measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
-   accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
-   loss function helps mitigate the limitations of using either loss individually, promoting better performance in
-   segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+##### BCE-Dice Loss
+
+The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
+This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
+measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
+accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
+loss function helps mitigate the limitations of using either loss individually, promoting better performance in
+segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
 
 ```math
 \text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}
 ```
 
-   - $`y_{\text{true}}`$ - ground truth segmentation map.
-   
-   - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
-   
-   - Other symbols as defined previously.
+- $`y_{\text{true}}`$ - ground truth segmentation map.
 
-   ##### True Positive Rate
-   
-   The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
-   true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
-   pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
-   analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
-   by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
-   the total number of actual positives in the ground truth.
+- $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
+
+- Other symbols as defined previously.
+
+##### True Positive Rate
+
+The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
+true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
+pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
+analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
+by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
+the total number of actual positives in the ground truth.
 
 ```math
 \text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})
 ```
 
-   - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
+- $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
 
-   - $`1 - \text{Dice}`$ - ground truth segmentation map.
+- $`1 - \text{Dice}`$ - ground truth segmentation map.
 
 ## Getting Started
 
