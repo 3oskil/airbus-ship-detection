@@ -4,10 +4,19 @@
 
 - [Project description](#Project-description)
 - [Notes](#Notes)
-  - [To-Do](#To-Do)
+    - [To-Do](#To-Do)
 - [Exploratory data analysis](#Exploratory-data-analysis)
 - [Solution description](#Solution-description)
+    - [Dataset Preprocessing](#Dataset-Preprocessing)
+    - [Models](#Models)
+    - [Loss and metrics](#Loss-and-metrics)
+    - [Training, Validation and Test](#Training,-Validation-and-Test)
 - [Getting Started](#Getting-Started)
+    - [Prerequisites](#Prerequisites)
+    - [Installation](#Installation)
+    - [Configuration](#Configuration)
+    - [Training](#Training)
+    - [Inference](#Inference)
 
 ## Project description
 
