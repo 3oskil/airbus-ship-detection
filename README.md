@@ -93,6 +93,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    \text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum y_{\text{pred}} + \epsilon}
    ```
 
+
    - $`y_{\text{pred}}`$ - predicted segmentation map.
 
    - $`y_{\text{true}}`$ - ground truth segmentation map.
@@ -114,6 +115,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    \text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}
    ```
 
+
    - $`y_{\text{true}}`$ - ground truth segmentation map.
    
    - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
@@ -132,6 +134,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    ```math
    \text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})
    ```
+
 
    - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
 
