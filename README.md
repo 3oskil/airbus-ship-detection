@@ -49,7 +49,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 ## Solution description
 
-#### Dataset Preprocessing
+### Dataset Preprocessing
 - **Dataset Validation**: It checks the dataset's structure and contents, ensuring the presence of necessary directories
   and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
   corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
@@ -71,7 +71,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
   directories, applying data augmentation, and splitting the dataset. This setup phase ensures that the data is
   correctly partitioned and accessible for the data generators.
 
-- *Custom Augmentation*: The framework is designed to accommodate future enhancements in data augmentation techniques,
+- **Custom Augmentation**: The framework is designed to accommodate future enhancements in data augmentation techniques,
   specifically targeting the augmentation of images by introducing synthetic variations. This innovative approach
   involves extracting boat images from existing photographs using their segmentation masks, then applying
   transformations such as rotation, resizing, and random placement onto images that originally contain no boats.
@@ -81,9 +81,9 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
   where the dataset is limited or lacks variety in certain aspects, offering a creative solution to enhance model
   performance without the need for additional real-world data.
 
-#### **Models**
+### **Models**
 
-   - ##### U-Net Version 1 (build_unet_v1)
+   - #### U-Net Version 1 (build_unet_v1)
    This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
    with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
    model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
@@ -91,7 +91,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    utilizes a combination of binary cross-entropy and dice loss for training, aiming to optimize both pixel-wise
    accuracy and overlap between predicted and ground truth masks.
    
-   - ##### U-Net Version 2 (build_unet_v2)
+   - #### U-Net Version 2 (build_unet_v2)
    The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
    convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
    performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
@@ -99,7 +99,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    regularization. The design principles remain focused on balancing feature extraction capabilities with computational
    efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
    
-   - ##### U-Net++ (build_unet_pp)
+   - #### U-Net++ (build_unet_pp)
    U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
    skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
    facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
@@ -113,9 +113,9 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    between these architectures offers flexibility in addressing various segmentation challenges, from basic applications
    with U-Net v1 to more complex scenarios requiring advanced features like those in U-Net v2 and U-Net++.
 
-#### **Loss and metrics**
+### **Loss and metrics**
 
-- ##### Dice Score
+- #### Dice Score
     The Dice score (also known as the Dice coefficient) measures the similarity between two sets, which, in the context
     of image segmentation, correspond to the predicted segmentation map and the ground truth. It ranges from 0 (no
     overlap) to 1 (perfect overlap), making it an effective metric for assessing the accuracy of segmentation models. The
@@ -130,8 +130,7 @@ y_{\text{pred}} + \epsilon}$$
  - $`\sum`$ - summation over all pixels.
  - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
 
-- ##### BCE-Dice Loss
-
+- #### BCE-Dice Loss
     The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
     This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
     measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
@@ -145,8 +144,7 @@ $$\text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))
  - $`\text{round}(y_{\text{pred}})`$ - predicted segmentation map rounded to the nearest integer (0 or 1).
  - Other symbols as defined previously.
 
-- ##### True Positive Rate
-
+- #### True Positive Rate
     The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
     true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
     pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
@@ -159,7 +157,7 @@ $$\text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \te
  - $`\text{BCE}(y_{\text{true}}, y_{\text{pred}})`$ - predicted segmentation map.
  - $`1 - \text{Dice}`$ - ground truth segmentation map.
 
-#### **Training, Validation and Test**
+### **Training, Validation and Test**
 
 The **train** function orchestrates the model training process using provided training and validation datasets. It
 incorporates several key components:
