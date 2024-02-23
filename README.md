@@ -10,7 +10,7 @@
     - [Dataset Preprocessing](#Dataset-Preprocessing)
     - [Models](#Models)
     - [Loss and metrics](#Loss-and-metrics)
-    - [Training, Validation and Test](#Training,-Validation-and-Test)
+    - [Training, Validation and Test](#Training-Validation-and-Test)
 - [Getting Started](#Getting-Started)
     - [Prerequisites](#Prerequisites)
     - [Installation](#Installation)
