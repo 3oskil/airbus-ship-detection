@@ -32,13 +32,13 @@ def get_model(config):
         keras.Model: The specified neural network model.
     """
     if config['model_name'] == 'unet_v1':
-        from models import build_unet_v1
+        from utils.models import build_unet_v1
         model = build_unet_v1(config)
     elif config['model_name'] == 'unet_v2':
-        from models import build_unet_v2
+        from utils.models import build_unet_v2
         model = build_unet_v2(config)
     elif config['model_name'] == 'unet_pp':
-        from models import build_unet_pp
+        from utils.models import build_unet_pp
         model = build_unet_pp(config)
     else:
         model = None
