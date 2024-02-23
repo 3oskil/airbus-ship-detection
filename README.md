@@ -90,7 +90,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    number of pixels in both masks, with a small constant added to avoid division by zero.
 
    ```math
-   \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+   \text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum y_{\text{pred}} + \epsilon}
    ```
 
    ##### BCE-Dice Loss
