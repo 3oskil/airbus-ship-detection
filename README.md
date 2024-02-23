@@ -50,28 +50,28 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 ## Solution description
 
 #### Dataset Preprocessing
-- Dataset Validation: It checks the dataset's structure and contents, ensuring the presence of necessary directories
+- **Dataset Validation**: It checks the dataset's structure and contents, ensuring the presence of necessary directories
   and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
   corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
   are in the correct format.
 
-- Data Augmentation: Utilizes the albumentations library to perform on-the-fly data augmentation during the training
+- **Data Augmentation**: Utilizes the albumentations library to perform on-the-fly data augmentation during the training
   phase. The augmentation techniques include flips, rotations, brightness and contrast adjustments, and more complex
   transformations like elastic, grid, and optical distortions. This helps improve model generalization by presenting
   a more diverse set of training examples.
 
-- Data Generators: Implements a SegmentationDataGenerator class that extends keras.utils.Sequence, providing a
+- **Data Generators**: Implements a SegmentationDataGenerator class that extends keras.utils.Sequence, providing a
   robust mechanism for batch-wise data feeding during model training or evaluation. This class efficiently handles
   image and mask loading, resizing, optional augmentation, and normalization. It supports shuffling to ensure
   diverse mini-batches and includes methods for visualizing batches of data, aiding in debugging and dataset
   understanding.
 
-- Dataset Preparation and Organization: Includes functions for organizing and preparing the dataset into a structure
+- **Dataset Preparation and Organization**: Includes functions for organizing and preparing the dataset into a structure
   suitable for training, validation, and testing. It automates the process of copying images and masks to designated
   directories, applying data augmentation, and splitting the dataset. This setup phase ensures that the data is
   correctly partitioned and accessible for the data generators.
 
-- Custom Augmentation: The framework is designed to accommodate future enhancements in data augmentation techniques,
+- **Custom Augmentation**: The framework is designed to accommodate future enhancements in data augmentation techniques,
   specifically targeting the augmentation of images by introducing synthetic variations. This innovative approach
   involves extracting boat images from existing photographs using their segmentation masks, then applying
   transformations such as rotation, resizing, and random placement onto images that originally contain no boats.
@@ -84,7 +84,6 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 #### **Models**
 
    - ##### U-Net Version 1 (build_unet_v1)
-   
    This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
    with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
    model employs conventional convolutional blocks, max pooling for downsampling, dropout for regularization, and
@@ -93,7 +92,6 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    accuracy and overlap between predicted and ground truth masks.
    
    - ##### U-Net Version 2 (build_unet_v2)
-   
    The second version introduces Batch Normalization in each convolutional block to stabilize learning and improve
    convergence rates. The architecture follows the classic U-Net pattern but enhances feature propagation and model
    performance through the normalization layers. This version also employs ELU activation for non-linearities, aiming
@@ -102,7 +100,6 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
    efficiency, making it suitable for more extensive datasets or more complex segmentation tasks.
    
    - ##### U-Net++ (build_unet_pp)
-   
    U-Net++ introduces a sophisticated enhancement over the traditional U-Net architecture by incorporating nested, dense
    skip pathways. These modifications aim to improve the flow of information and gradients throughout the network,
    facilitating more detailed feature extraction at various scales and improving segmentation accuracy, particularly at
