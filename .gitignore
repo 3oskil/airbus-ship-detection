@@ -6,7 +6,6 @@ venv/
 
 # Files to ignore
 *.pyc
-*.hdf5
 *~
 
 # OS generated files to ignore
