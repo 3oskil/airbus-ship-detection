@@ -1,5 +1,15 @@
 # Airbus Ship Detection Challenge
 
+## Table of Contents
+
+- [Project description](#Project description)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+
+## Project description
+
 The Airbus Ship Detection Challenge, hosted on Kaggle, is aimed at advancing the development of machine learning models
 capable of detecting ships in satellite images. This competition provides participants with a dataset of satellite
 imagery, challenging them to create algorithms that can accurately identify and localize ships. The goal is to leverage
