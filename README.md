@@ -101,14 +101,14 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
    - $`\epsilon`$ - a small constant (e.g., 0.0001) added to avoid division by zero.
 
-##### BCE-Dice Loss
-
-The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
-This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
-measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
-accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
-loss function helps mitigate the limitations of using either loss individually, promoting better performance in
-segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
+   ##### BCE-Dice Loss
+   
+   The BCE-Dice loss combines binary cross-entropy (BCE) loss and Dice loss (1 - Dice score) into a single function.
+   This hybrid approach leverages the pixel-wise classification capabilities of BCE loss and the global similarity
+   measurement of Dice loss, providing a balanced optimization criterion that encourages the model to improve both local
+   accuracy and overall shape alignment with the ground truth. By summing the BCE loss and the Dice loss, this combined
+   loss function helps mitigate the limitations of using either loss individually, promoting better performance in
+   segmentation tasks, especially when dealing with imbalanced datasets or irregular object shapes.
 
    ```math
    \text{TPR} = \frac{\sum (y_{\text{true}} \times \text{round}(y_{\text{pred}}))}{\sum y_{\text{true}}}
@@ -120,14 +120,14 @@ segmentation tasks, especially when dealing with imbalanced datasets or irregula
    
    - Other symbols as defined previously.
 
-##### True Positive Rate
-
-The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
-true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
-pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
-analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
-by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
-the total number of actual positives in the ground truth.
+   ##### True Positive Rate
+   
+   The True Positive Rate (TPR), also known as sensitivity or recall, quantifies the proportion of actual positives (
+   true conditions) correctly identified by the model. In segmentation models, it measures how well the model identifies
+   pixels or regions that genuinely belong to the object of interest. The TPR is particularly important in medical image
+   analysis or other applications where missing a relevant feature can have significant consequences. It is calculated
+   by dividing the number of true positive predictions (pixels correctly classified as belonging to the target class) by
+   the total number of actual positives in the ground truth.
 
    ```math
    \text{BCE-Dice Loss} = \text{BCE}(y_{\text{true}}, y_{\text{pred}}) + (1 - \text{Dice})
