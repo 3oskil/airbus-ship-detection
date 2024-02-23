@@ -7,7 +7,7 @@
     - [To-Do](#To-Do)
 - [Exploratory data analysis](#Exploratory-data-analysis)
 - [Solution description](#Solution-description)
-    - [Dataset-Preprocessing](#**Dataset-Preprocessing**-(data.py-file))
+    - [Dataset Preprocessing](#**Dataset-Preprocessing**)
     - [Models](#Models)
     - [Loss and metrics](#Loss-and-metrics)
     - [Training, Validation and Test](#Training,-Validation-and-Test)
@@ -49,7 +49,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 ## Solution description
 
-1. #### **Dataset Preprocessing** (data.py file)
+1. #### **Dataset Preprocessing**
     - Dataset Validation: It checks the dataset's structure and contents, ensuring the presence of necessary directories
       and files. The validation process confirms the existence of 'train', 'val', and 'test' splits, along with their
       corresponding 'images' and 'masks' directories. It also verifies that the number of image and mask files match and
