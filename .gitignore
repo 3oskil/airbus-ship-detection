@@ -1,12 +1,12 @@
 # Folders to ignore
 airbus-ship-detection/
 datasets/
-runs/
 venv/
 .idea/
 
 # Files to ignore
 *.pyc
+*.hdf5
 *~
 
 # OS generated files to ignore
