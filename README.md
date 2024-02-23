@@ -124,6 +124,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 $$\text{Dice} = \frac{2 \times \sum (y_{\text{pred}} \times y_{\text{true}}) + \epsilon}{\sum y_{\text{true}} + \sum
 y_{\text{pred}} + \epsilon}$$
+, where
     - $`y_{\text{pred}}`$ - predicted segmentation map.
     - $`y_{\text{true}}`$ - ground truth segmentation map.
     - $`\sum`$ - summation over all pixels.
