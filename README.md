@@ -83,7 +83,7 @@ EDA is provided in the notebook "dataset_eda.ipynb" stored in the "notebooks" fo
 
 #### **Models**
 
-   ##### U-Net Version 1 (build_unet_v1)
+   - ##### U-Net Version 1 (build_unet_v1)
    
    This version is a straightforward implementation of the U-Net architecture, characterized by its symmetric design
    with a contracting path to capture context and a symmetric expanding path that enables precise localization. The
